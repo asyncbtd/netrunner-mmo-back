@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: netrunner-mmo-back
+
+  ##### SPRING #####
+  threads:
+    virtual:
+      enabled: true
+
+###### SPRING DOC #####
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+##### ACTUATOR #####
+management:
+  info:
+    git:
+      enabled: true
+      mode: full
+    build.enabled: true
+    java.enabled: true
+    env.enabled: true
+  health:
+    livenessState.enabled: true
+    readinessState.enabled: true
+  metrics:
+    tags.application: netrunner-mmo-back
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics, prometheus
+
+##### LOGGING #####
+logging:
+  level:
+    net.nrmmo: debug
