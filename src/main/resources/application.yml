@@ -19,7 +19,7 @@ spring:
     username: nrmmo
     password: 2wsx@WSX
   flyway:
-    default-schema: nrmmo_schema
+    default-schema: migration_schema
     encoding: UTF-8
     locations: classpath:db/migration
 
