@@ -1,3 +1,37 @@
+-- TODO
+create table reference_schema.ref_chat_types
+(
+    chat_type_id bigint generated always as identity,
+    constraint pk_ref_chat_types_ctid
+        primary key (chat_type_id)
+);
+
+-- TODO
+create table reference_schema.ref_event_types
+(
+    event_type_id bigint generated always as identity,
+    constraint pk_ref_event_types_etid
+        primary key (event_type_id)
+);
+
+create table reference_schema.ref_attrs
+(
+    attr_id      bigint generated always as identity,
+    attr_version integer default 0    not null,
+    attr_code    varchar(255)         not null,
+    attr_name    varchar(255)         not null,
+    attr_format  varchar(255),
+    attr_notes   varchar(510),
+    attr_active  boolean default true not null,
+    constraint pk_ref_attrs_aid
+        primary key (attr_id),
+    constraint chk_ref_attrs_av
+        check (attr_version >= 0)
+);
+
+alter table reference_schema.ref_attrs
+    owner to nrmmo;
+
 create table reference_schema.ref_countries
 (
     country_id            bigint generated always as identity,
@@ -86,8 +120,8 @@ create table reference_schema.ref_messages
     message_version integer default 0    not null,
     language_id     bigint               not null,
     message_code    varchar(255)         not null,
-    message_format  varchar(1000)        not null,
-    message_note    varchar(1000),
+    message_format  varchar(255)        not null,
+    message_note    varchar(510),
     message_active  boolean default true not null,
     constraint pk_ref_messages_mid
         primary key (message_id),
@@ -96,7 +130,7 @@ create table reference_schema.ref_messages
             references reference_schema.ref_languages (language_id)
             on update cascade
             on delete no action,
-    constraint uk_ref_messages_lc_mk
+    constraint uk_ref_messages_lid_mc
         unique (language_id, message_code),
     constraint chk_ref_messages_mv
         check (message_version >= 0)
